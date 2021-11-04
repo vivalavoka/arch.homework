@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-migration
+  namespace: crud-namespace
+  labels:
+    app: postgres-migration
+spec:
+  template:
+    metadata:
+      name: postgres-migration
+      labels:
+        app: postgres-migration
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: create-table
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          env:
+            - name: DATABASE_URI
+              value: postgres
+          image: postgres:latest
+          command:
+            - sh
+            - "-c"
+            - |
+              PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -U $POSTGRES_USER -h $DATABASE_URI  <<'EOF'
+              CREATE TABLE IF NOT EXISTS users (
+                id SERIAL,
+                email VARCHAR UNIQUE,
+                phone VARCHAR,
+                username VARCHAR
+              );
+              EOF
+  backoffLimit: 0 #number of retries before considering a Job as failed
