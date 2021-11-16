@@ -28,9 +28,15 @@ spec:
           image: postgres:latest
           env:
             - name: POSTGRES_HOST
-              value: {{ include "postgresql.fullname" . | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: crud-config
+                  key: POSTGRES_HOST
             - name: POSTGRES_PORT
-              value: {{ .Values.postgresql.service.port | quote }}
+              valueFrom:
+                configMapKeyRef:
+                  name: crud-config
+                  key: POSTGRES_PORT
           command:
             - sh
             - "-c"
@@ -39,15 +45,26 @@ spec:
               do echo waiting for database; sleep 2; done;
       containers:
       - name: post-install-job
+        envFrom:
+          - configMapRef:
+              name: crud-config
         env:
-          - name: DATABASE_URI
-            value: {{ printf "postgresql://%s:%s@%s:%s/%s" .Values.postgresql.postgresqlUsername .Values.postgresql.postgresqlPassword (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase  | quote }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: crud-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: crud-secret
+                key: POSTGRES_USER
         image: postgres:latest
         command:
           - sh
           - "-c"
           - |
-            psql $DATABASE_URI <<'EOF'
+            PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT <<'EOF'
               CREATE TABLE IF NOT EXISTS users (
                 id SERIAL,
                 email VARCHAR UNIQUE,

@@ -4,7 +4,7 @@ metadata:
   name: crud-config
 data:
   POSTGRES_DB: {{ .Values.postgresql.postgresqlDatabase | quote }}
-  POSTGRES_HOST: {{ include "postgresql.fullname" . | quote }}
+  POSTGRES_HOST: {{ printf "%s-%s" .Release.Name "postgresql" }}
   POSTGRES_PORT: {{ .Values.postgresql.service.port | quote }}
 ---
 apiVersion: v1
@@ -15,4 +15,3 @@ type: Opaque
 data:
   POSTGRES_USER: {{ .Values.postgresql.postgresqlUsername | b64enc | quote }}
   POSTGRES_PASSWORD: {{ .Values.postgresql.postgresqlPassword | b64enc | quote }}
-  # DATABASE_URI: {{ printf "postgresql+psycopg2://%s:%s@%s:%s/%s" .Values.postgresql.postgresqlUsername .Values.postgresql.postgresqlPassword (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase | quote }}

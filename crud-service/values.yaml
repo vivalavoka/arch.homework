@@ -11,8 +11,6 @@ service:
   type: NodePort
   port: 8000
 
-fullnameOverride: crud-postgresql
-
 postgresql:
   enabled: true
   postgresqlUsername: crud-user
@@ -23,7 +21,7 @@ postgresql:
 
 metrics:
   serviceMonitor:
-    enabled: true
+    enabled: false
 
 ingress:
   enabled: true
