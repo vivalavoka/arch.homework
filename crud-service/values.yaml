@@ -21,7 +21,7 @@ postgresql:
 
 metrics:
   serviceMonitor:
-    enabled: false
+    enabled: true
 
 ingress:
   enabled: true

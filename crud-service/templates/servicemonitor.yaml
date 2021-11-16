@@ -15,6 +15,6 @@ spec:
       {{- include "crud-service.selectorLabels" . | nindent 6 }}
   endpoints:
   - interval: 15s
-    port: web
+    port: http
     path: /metrics
 {{- end }}
