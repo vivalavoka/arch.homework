@@ -1,0 +1,32 @@
+# Default values for crud-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+
+image:
+  repository: vldmr/simple-crud
+
+service:
+  type: NodePort
+  port: 8000
+
+fullnameOverride: crud-postgresql
+
+postgresql:
+  enabled: true
+  postgresqlUsername: crud-user
+  postgresqlPassword: password
+  postgresqlDatabase: otusdb
+  service:
+    port: "5432"
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+ingress:
+  enabled: true
+  hosts:
+    - host: arch.homework
+      paths: ["/"]
