@@ -1,17 +1,34 @@
 # arch.homework
 
-## Запуск приложения CRUD для второго домашнего задания
+## Запуск третьего домашнего задания
+
+### Установка ingress-nginx
 
 ```
-helm install --create-namespace -n crud-ns crud simple-crud/helm-postgresql
-kubectl apply -f simple-crud/manifest.yml
+helm install nginx ingress-nginx/ingress-nginx -f nginx-ingress.yaml --atomic --create-namespace --namespace ingress-nginx
 ```
 
-## Запуск приложения для первого домашнего задания
+### Установка prometheus
 
 ```
-kubectl apply -f node-app/manifest.yml
+helm install prom prometheus-community/kube-prometheus-stack -f prometheus.yaml --atomic --create-namespace --namespace monitoring
 ```
+
+### Установка crud-service
+
+```
+helm install crud ./crud-service --atomic --create-namespace --namespace crud-ns
+```
+
+## Результаты ДЗ
+
+### Скриншот grafana dashboard
+
+![Crud Dashboard](grafana-metrics.png "Crud dashboard")
+
+### Dashboard JSON
+
+[JSON-file](grafana-dashboard.json)
 
 ## Minikube
 
