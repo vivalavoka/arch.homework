@@ -1,0 +1,34 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: profile
+spec:
+  rules:
+    - http:
+        paths:
+          - path: / # Направляем все запросы к profile
+            pathType: Prefix
+            backend:
+              service:
+                name: profile-profile-service
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /auth/(.*) # Направляем все запросы /auth к auth-service. Создаем отдельный Ingress изза аннотаций rewrite
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-auth-service
+                port:
+                  number: 80

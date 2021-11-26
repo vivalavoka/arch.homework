@@ -1,0 +1,7 @@
+postgresql:
+  enabled: true
+  postgresqlUsername: crud-user
+  postgresqlPassword: password
+  postgresqlDatabase: otusdb
+  service:
+    port: "5432"
