@@ -5,6 +5,7 @@
 ### Установка ingress-nginx
 
 ```
+minikube addons disable ingress
 helm install nginx ingress-nginx/ingress-nginx -f nginx-ingress.yaml --atomic --create-namespace --namespace ingress-nginx
 ```
 
