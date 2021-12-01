@@ -20,7 +20,7 @@ istioctl install --set profile=demo -y
 kubectl label namespace default istio-injection=enabled
 ```
 
-### Установка crud-service
+### Установка node-app
 
 ```
 kubectl apply -f node-app/manifest.yml
@@ -45,13 +45,13 @@ kubectl apply -f addons
 kubectl rollout status deployment/kiali -n istio-system
 ```
 
+## Проверка работы
+
 ### Запуск kiali dashboard
 
 ```
 istioctl dashboard kiali
 ```
-
-## Проверка работы
 
 ### Нагрузка на сервисы
 
