@@ -2,18 +2,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: echoserver # Перезаписываем уже существующий ingress
+  name: profile-service # Перезаписываем уже существующий ingress
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: http://auth-service.default.svc.cluster.local/auth/nginx
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.default.svc.cluster.local/check/
     nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
 spec:
   rules:
-    - http:
+    - host: arch.homework
+      http:
         paths:
           - path: / # Направляем все запросы к echoserver
             pathType: Prefix
             backend:
               service:
-                name: echoserver
+                name: profile-profile-service
                 port:
-                  number: 80
+                  number: 8000

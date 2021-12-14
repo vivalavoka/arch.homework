@@ -1,19 +1,6 @@
 # arch.homework
 
-## Запуск третьего домашнего задания
-
-### Установка ingress-nginx
-
-```
-minikube addons disable ingress
-helm install nginx ingress-nginx/ingress-nginx -f nginx-ingress.yaml --atomic --create-namespace --namespace ingress-nginx
-```
-
-### Установка prometheus
-
-```
-helm install prom prometheus-community/kube-prometheus-stack -f prometheus.yaml --atomic --create-namespace --namespace monitoring
-```
+## Запуск пятого домашнего задания
 
 ### Установка postgresql
 
@@ -37,6 +24,14 @@ helm install profile ./profile-service --atomic --create-namespace --namespace a
 
 ```
 helm install auth ./auth-service --atomic --create-namespace --namespace arch
+```
+
+### Настройка nginx-ingress
+
+```
+helm install --version "3.35.0" -n nginx-ingress -f ./nginx-ingress/nginx.yaml ingress-nginx ingress-nginx/ingress-nginx
+kubectl apply -f ./nginx-ingress/routes.yaml
+kubectl apply -f ./nginx-ingress/auth.yaml
 ```
 
 ## Результаты ДЗ

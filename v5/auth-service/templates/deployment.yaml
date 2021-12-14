@@ -33,7 +33,7 @@ spec:
             - sh
             - "-c"
             - |
-              until pg_isready -h $POSTGRES_HOST  -p  $POSTGRES_PORT; 
+              until pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT;
               do echo waiting for database; sleep 2; done;
       containers:
         - name: {{ .Chart.Name }}
