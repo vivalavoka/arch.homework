@@ -35,13 +35,11 @@ kubectl apply -f ./nginx-ingress/routes.yaml
 
 ## Результаты ДЗ
 
-### Скриншот grafana dashboard
+### Команда для запуска тестов newman
 
-![Crud Dashboard](grafana-metrics.png "Crud dashboard")
-
-### Dashboard JSON
-
-[JSON-file](grafana-dashboard.json)
+```
+newman run ./tests.postman_collection.json --env-var "baseUrl=arch.homework" --verbose
+```
 
 ## Minikube
 

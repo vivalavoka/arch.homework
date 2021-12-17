@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "f65b5b4f-d7c9-4faa-977e-6fb68ddcbc6f",
+		"name": "Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sigh Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "703f9ef3-0087-418b-a532-b5ebfaa3fbe0",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "818a7cad-9692-4112-8e6a-a71ea39a9366",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"email\", `ex_${uuid.v4()}@mple.com`);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"First Name\",\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\",\n    \"phone\": \"9997771111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/sign-up/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-up",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96634c8e-a593-4191-9e64-e78b41ec28ae",
+						"exec": [
+							"pm.test(\"Status code is 401\", () => {",
+							"  pm.expect(pm.response.code).to.eql(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/user/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d539f82a-617e-4190-9e20-25fe6508eb25",
+						"exec": [
+							"pm.test(\"Status code is 401\", () => {",
+							"  pm.expect(pm.response.code).to.eql(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"New UserName\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/user/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca2fd5ba-de3b-4afc-9c6b-0a3c7ef493a1",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});",
+							"",
+							"pm.test(\"Session-id key in cookie is present\", () => {",
+							"  pm.expect(pm.cookies.has('session-id')).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1873c44e-dca8-459c-9ac4-0b30bf3e5322",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/login/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "052ac219-8d28-408c-9a6a-f2850b803894",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"New Name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/user/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98a64c05-db7a-49dc-98ca-cb74f997477c",
+						"exec": [
+							"pm.test(\"First User\", () => {",
+							"  const email = postman.getEnvironmentVariable(\"email\");",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.username).to.eql(\"New Name\");",
+							"  pm.expect(responseJson.email).to.eql(email);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJleF8wMDJAbXBsZS5jb20iLCJwaG9uZSI6IjEyMzEyMzEyMyIsInVzZXJuYW1lIjoiVkxETVIiLCJpYXQiOjE2Mzk3NTA4MTksImV4cCI6MTYzOTc1MjAxOX0.gH8c3a6HWGPygGp4OTjlHLLocqg_EJolq4Ta0ixSlFU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/user/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f734621b-af78-4fdd-b940-0cd9ba719c94",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});",
+							"",
+							"pm.test(\"Session-id key in cookie not exists\", () => {",
+							"  pm.expect(pm.cookies.has('session-id')).to.be.false;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/logout/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sigh Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0189bfa-141e-4bb8-864c-7eb88cd95f43",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8c9ac096-bfec-4971-92f3-3ccafe97e57b",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"email\", `ex_${uuid.v4()}@mple.com`);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Second User\",\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\",\n    \"phone\": \"9997772222\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/sign-up/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-up",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fac219a8-ef00-4925-b3e4-5ed059feb2c2",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});",
+							"",
+							"pm.test(\"Session-id key in cookie is present\", () => {",
+							"  pm.expect(pm.cookies.has('session-id')).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6d3dc3e3-8b3f-478b-a480-b400037f5e99",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/login/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc3d91ad-ad5c-464f-8652-578421bf5c65",
+						"exec": [
+							"pm.test(\"Second User\", () => {",
+							"  const email = postman.getEnvironmentVariable(\"email\");",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.username).to.eql(\"Second User\");",
+							"  pm.expect(responseJson.email).to.eql(email);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJleF8wMDJAbXBsZS5jb20iLCJwaG9uZSI6IjEyMzEyMzEyMyIsInVzZXJuYW1lIjoiVkxETVIiLCJpYXQiOjE2Mzk3NTA4MTksImV4cCI6MTYzOTc1MjAxOX0.gH8c3a6HWGPygGp4OTjlHLLocqg_EJolq4Ta0ixSlFU"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/user/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
