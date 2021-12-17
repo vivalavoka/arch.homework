@@ -3,6 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: profile
+  namespace: arch
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
@@ -23,6 +24,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: auth
+  namespace: arch
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$2
