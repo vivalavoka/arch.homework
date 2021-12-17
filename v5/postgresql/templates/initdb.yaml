@@ -72,9 +72,6 @@ spec:
           - "-c"
           - |
             PGPASSWORD=$POSTGRES_PASSWORD psql -d $POSTGRES_DB -U $POSTGRES_USER -h $POSTGRES_HOST -p $POSTGRES_PORT <<'EOF'
-              GRANT CONNECT ON DATABASE $(POSTGRES_DB) TO "$(POSTGRES_SERVICE_USER)";
-              GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "$(POSTGRES_SERVICE_USER)";
-              GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "$(POSTGRES_SERVICE_USER)";
               CREATE EXTENSION pgcrypto;
               CREATE TABLE IF NOT EXISTS public.users (
                 id SERIAL,
@@ -83,6 +80,9 @@ spec:
                 phone VARCHAR,
                 username VARCHAR
               );
+              GRANT CONNECT ON DATABASE $(POSTGRES_DB) TO "$(POSTGRES_SERVICE_USER)";
+              GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "$(POSTGRES_SERVICE_USER)";
+              GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "$(POSTGRES_SERVICE_USER)";
             EOF
 
   backoffLimit: 0

@@ -2,16 +2,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: profile-service
+  name: profile
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.default.svc.cluster.local/check/
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
     nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
 spec:
   rules:
-    # - host: arch.homework
     - http:
         paths:
-          - path: / # Направляем все запросы к echoserver
+          - path: / # Направляем все запросы к profile
             pathType: Prefix
             backend:
               service:
@@ -22,12 +22,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: auth-service
+  name: auth
   annotations:
+    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    # - host: arch.homework
     - http:
         paths:
           - path: /auth(/|$)(.*) # Направляем все запросы /auth к auth-service. Создаем отдельный Ingress изза аннотаций rewrite

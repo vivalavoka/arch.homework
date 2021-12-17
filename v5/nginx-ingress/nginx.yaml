@@ -4,4 +4,4 @@ controller:
     enableHttps: false
     type: NodePort
     nodePorts:
-      http: 80
+      http: 32080
