@@ -37,7 +37,7 @@ kubectl apply -f ./nginx-ingress/routes.yaml
 
 ### Диаграмма последовательности
 
-![Аутентификация](grafana-metrics.png "Процесс аутентификации")
+![Аутентификация](sequence_diagram.png "Процесс аутентификации")
 
 ### Команда для запуска тестов newman
 
