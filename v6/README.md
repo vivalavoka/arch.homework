@@ -2,6 +2,12 @@
 
 ## Запуск шестого домашнего задания
 
+## Добавление bitnami репозитория
+
+```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+
 ### Запуск minikube
 
 ```
@@ -22,17 +28,31 @@ helm install rmq bitnami/rabbitmq --create-namespace --namespace arch
 ```
 
 
-### Установка profile-service
-
-```
-helm install profile ./profile-service --atomic --create-namespace --namespace arch
-```
-
 ### Установка auth-service
 
 ```
 helm install auth ./auth-service --atomic --create-namespace --namespace arch
 ```
+
+
+### Установка billing-service
+
+```
+helm install billing ./billing-service --atomic --create-namespace --namespace arch
+```
+
+### Установка notify-service
+
+```
+helm install notify ./notify-service --atomic --create-namespace --namespace arch
+```
+
+### Установка order-service
+
+```
+helm install order ./order-service --atomic --create-namespace --namespace arch
+```
+
 
 ### Настройка nginx-ingress
 

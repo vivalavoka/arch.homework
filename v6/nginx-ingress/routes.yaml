@@ -2,10 +2,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: profile
+  name: order
   namespace: arch
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
     nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
 spec:
@@ -13,11 +14,57 @@ spec:
     - host: arch.homework
       http:
         paths:
-          - path: / # Направляем все запросы к profile
+          - path: /order(/|$)(.*) # Направляем все запросы к order
             pathType: Prefix
             backend:
               service:
-                name: profile-profile-service
+                name: order-order-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: billing
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /billing(/|$)(.*) # Направляем все запросы к billing
+            pathType: Prefix
+            backend:
+              service:
+                name: billing-billing-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notify
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /notify(/|$)(.*) # Направляем все запросы к notify
+            pathType: Prefix
+            backend:
+              service:
+                name: notify-notify-service
                 port:
                   number: 8000
 ---
