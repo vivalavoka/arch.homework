@@ -1,0 +1,17 @@
+postgresql:
+  enabled: true
+  postgresqlUsername: crud-user
+  postgresqlPassword: password
+  postgresqlDatabase: otusdb
+  service:
+    port: "5432"
+
+postgresData:
+  authUsername: auth_user
+  authPassword: password
+  billingUsername: billing_user
+  billingPassword: password
+  notifyUsername: notify_user
+  notifyPassword: password
+  orderUsername: order_user
+  orderPassword: password
