@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  POSTGRES_DB: {{ .Values.postgresql.postgresqlDatabase | quote }}
+  POSTGRES_HOST: {{ printf "%s-%s" .Release.Name "postgresql" }}
+  POSTGRES_PORT: {{ .Values.postgresql.service.port | quote }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+data:
+  POSTGRES_AUTH_USER: {{ .Values.postgresData.authUsername | b64enc | quote }}
+  POSTGRES_AUTH_PASSWORD: {{ .Values.postgresData.authPassword | b64enc | quote }}
+  POSTGRES_BILLING_USER: {{ .Values.postgresData.billingUsername | b64enc | quote }}
+  POSTGRES_BILLING_PASSWORD: {{ .Values.postgresData.billingPassword | b64enc | quote }}
+  POSTGRES_NOTIFY_USER: {{ .Values.postgresData.notifyUsername | b64enc | quote }}
+  POSTGRES_NOTIFY_PASSWORD: {{ .Values.postgresData.notifyPassword | b64enc | quote }}
+  POSTGRES_ORDER_USER: {{ .Values.postgresData.orderUsername | b64enc | quote }}
+  POSTGRES_ORDER_PASSWORD: {{ .Values.postgresData.orderPassword | b64enc | quote }}
+  POSTGRES_PROFILE_USER: {{ .Values.postgresData.profileUsername | b64enc | quote }}
+  POSTGRES_PROFILE_PASSWORD: {{ .Values.postgresData.profilePassword | b64enc | quote }}
