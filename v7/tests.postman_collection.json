@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "a6b9c7c1-5fac-43ba-bbdd-8d157e95a5d4",
+		"name": "Tests v7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sigh Up",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fd8794eb-5286-4612-bba7-81533391c66c",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aaf11308-41e9-4a3c-bc0f-7df3f720d2de",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"email\", `ex_${uuid.v4()}@mple.com`);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"First Name\",\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\",\n    \"phone\": \"9997771111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/sign-up/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"sign-up",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a15347b-2fe1-47cb-87c5-943a7652faaa",
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {",
+							"  pm.expect(pm.response.code).to.eql(204);",
+							"});",
+							"",
+							"pm.test(\"Session-id key in cookie is present\", () => {",
+							"  pm.expect(pm.cookies.has('session-id')).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "71d857e8-e140-4845-952c-58604f194052",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/auth/login/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay In",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b702d98-ad93-4081-821f-893ddb04b931",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Balance must be 20\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.value).to.eql(20);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fd848b1e-6744-446d-89db-324879a5649e",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"correlationId\", uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "correlation-id",
+						"value": "{{correlationId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 20\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/billing/balance/pay-in",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"balance",
+						"pay-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay In Locked",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94d6e737-b5cf-4536-a4d4-e8a83a4c49a4",
+						"exec": [
+							"pm.test(\"Status code is 409\", () => {",
+							"  pm.expect(pm.response.code).to.eql(409);",
+							"});",
+							"",
+							"pm.test(\"Locked error\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.code).to.eql('locked');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99da648e-a428-42a0-9d5f-d2b283f46d54",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "correlation-id",
+						"type": "text",
+						"value": "{{correlationId}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 20\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/billing/balance/pay-in",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"balance",
+						"pay-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33258c14-efe5-47be-8249-c03dd39fcf6e",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Order created\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.status).to.eql(\"accept_pending\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "23ad165a-7b9b-4bb1-aa57-431d2b7ce096",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"correlationId\", uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "correlation-id",
+						"value": "{{correlationId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/order/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new Create Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3ea646b-796b-4bd5-bab2-bfce82b2b985",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Order created\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.status).to.eql(\"accept_pending\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "923740f9-c077-4e66-a661-616f1395fead",
+						"exec": [
+							"const uuid = require('uuid');",
+							"",
+							"postman.setEnvironmentVariable(\"correlationId\", uuid.v4());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "correlation-id",
+						"value": "{{correlationId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/order/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order Locked",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75367a4e-5fc5-429f-b326-41272a60ad9f",
+						"exec": [
+							"pm.test(\"Status code is 409\", () => {",
+							"  pm.expect(pm.response.code).to.eql(409);",
+							"});",
+							"",
+							"pm.test(\"Locked error\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.code).to.eql(\"locked\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fe38f34f-0d21-4e69-9691-02765312607e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "correlation-id",
+						"type": "text",
+						"value": "{{correlationId}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/order/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Balance",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1de3aa82-2c3d-4e90-891c-596f513d2575",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.expect(pm.response.code).to.eql(200);",
+							"});",
+							"",
+							"pm.test(\"Balance must be 0\", () => {",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.value).to.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/billing/balance/",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"billing",
+						"balance",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
