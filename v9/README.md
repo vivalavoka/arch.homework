@@ -34,29 +34,16 @@ helm install rmq bitnami/rabbitmq --create-namespace --namespace arch
 helm install auth ./auth-service --atomic --create-namespace --namespace arch
 ```
 
-
 ### Установка billing-service
 
 ```
 helm install billing ./billing-service --atomic --create-namespace --namespace arch
 ```
 
-### Установка notify-service
-
-```
-helm install notify ./notify-service --atomic --create-namespace --namespace arch
-```
-
 ### Установка order-service
 
 ```
 helm install order ./order-service --atomic --create-namespace --namespace arch
-```
-
-### Установка profile-service
-
-```
-helm install profile ./profile-service --atomic --create-namespace --namespace arch
 ```
 
 ### Установка store-service
@@ -78,18 +65,8 @@ kubectl apply -f ./nginx-ingress/routes.yaml
 ```
 
 # Пользовательские сценарии
-
-## Регистрация
-![Регистрация](registration.jpg "Схема регистрации пользователя")
-## Авторизация
-![Авторизация](auth.jpg "Схема авторизации пользователя")
-## Пополнение баланса
-![Пополнение баланса](pay-in.jpg "Схема пополнения баланса")
 ## Создание заказа
 ![Создание заказа](create-order.jpg "Схема создания заказа")
-
-## Общая схема взаимодействия сервисов
-![Общая схема](service-map.jpg "Общая схема взаимодействия")
 
 # Назначения сервисов
 
@@ -159,7 +136,7 @@ kubectl apply -f ./nginx-ingress/routes.yaml
 ### Команда для запуска тестов newman
 
 ```
-newman run ./tests.postman_collection.json --env-var "baseUrl=arch.homework" --verbose
+newman run ./tests.postman_collection.json --env-var "baseUrl=arch.homework" --verbose --delay-request 100
 ```
 
 
