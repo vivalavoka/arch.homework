@@ -1,0 +1,159 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: order
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /order(/|$)(.*) # Направляем все запросы к order
+            pathType: Prefix
+            backend:
+              service:
+                name: order-order-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: billing
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /billing(/|$)(.*) # Направляем все запросы к billing
+            pathType: Prefix
+            backend:
+              service:
+                name: billing-billing-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: notify
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /notify(/|$)(.*) # Направляем все запросы к notify
+            pathType: Prefix
+            backend:
+              service:
+                name: notify-notify-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /store(/|$)(.*) # Направляем все запросы к store
+            pathType: Prefix
+            backend:
+              service:
+                name: store-store-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delivery
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /delivery(/|$)(.*) # Направляем все запросы к delivery
+            pathType: Prefix
+            backend:
+              service:
+                name: delivery-delivery-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: auth
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /auth(/|$)(.*) # Направляем все запросы /auth к auth-service. Создаем отдельный Ingress изза аннотаций rewrite
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-auth-service
+                port:
+                  number: 8000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: profile
+  namespace: arch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/auth-url: http://auth-auth-service.arch.svc.cluster.local:8000/check/
+    nginx.ingress.kubernetes.io/auth-response-headers: x-auth-token
+spec:
+  rules:
+    - host: arch.homework
+      http:
+        paths:
+          - path: /profile(/|$)(.*) # Направляем все запросы к profile
+            pathType: Prefix
+            backend:
+              service:
+                name: profile-profile-service
+                port:
+                  number: 8000
