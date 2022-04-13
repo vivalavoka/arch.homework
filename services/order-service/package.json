@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "amqplib": "^0.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.13.4",
+    "koa-body": "^4.2.0",
+    "pg": "^8.7.1",
+    "uuid": "^8.3.2"
+  }
+}

@@ -1,0 +1,15 @@
+CREATE EXTENSION pgcrypto;
+CREATE SCHEMA auth;
+CREATE USER auth_user WITH PASSWORD 'password';
+CREATE TABLE IF NOT EXISTS auth.users (
+    id SERIAL,
+    email VARCHAR UNIQUE,
+    password VARCHAR,
+    phone VARCHAR,
+    username VARCHAR
+);
+
+GRANT CONNECT ON DATABASE otusdb TO auth_user;
+GRANT ALL PRIVILEGES ON SCHEMA auth TO auth_user;
+GRANT ALL ON ALL TABLES IN SCHEMA auth TO auth_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA auth TO auth_user;
